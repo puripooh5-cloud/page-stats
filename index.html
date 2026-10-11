@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="th"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Page Stats</title>
+<meta name="description" content="สถิติคลิปสั้นรายวันของช่อง ต่างกันยังไง และ The Muscle Manual">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%232f5bd3'/%3E%3Cpath d='M4 11V7m4 4V5m4 6V8' stroke='white' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+:root { color-scheme: light; box-sizing: border-box; }
+body { margin: 0; font: 14px -apple-system, BlinkMacSystemFont, sans-serif; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a working dashboard read top to bottom — channel tabs, channel strip, what-works summary, first-seconds chart, trend, then the full clip ledger and the next-batch checklist. */
+:root {
+  --bg: #f6f5f1;
+  --surface: #ffffff;
+  --ink: #1d2027;
+  --muted: #646a76;
+  --line: #e3e1da;
+  --accent: #2f5bd3;
+  --good: #1e8a5a;
+  --warn: #b7791f;
+  --bad: #c2413a;
+  --cat-food: #d9822b;
+  --cat-animal: #3f8f5b;
+  --cat-goods: #8a5bc4;
+  --cat-nature: #2f86b8;
+  --cat-other: #8b8f98;
+  --cat-volume: #c2413a;
+  --cat-nutrition: #d9822b;
+  --cat-recovery: #2f86b8;
+  --cat-technique: #3f8f5b;
+  --cat-gear: #8a5bc4;
+  --bar-bg: #edebe4;
+  --display: "Bai Jamjuree", "IBM Plex Sans Thai", "Noto Sans Thai", system-ui, sans-serif;
+  --body: "IBM Plex Sans Thai", "Noto Sans Thai", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15171c; --surface: #1d2027; --ink: #eceae4; --muted: #9a9fab; --line: #2e323b;
+    --accent: #7c9cf0; --good: #4cc08a; --warn: #e0a84a; --bad: #ec7a72;
+    --cat-food: #eb9a4a; --cat-animal: #62b67f; --cat-goods: #ad86e0; --cat-nature: #5daedc; --cat-other: #8f949d;
+    --cat-volume: #ec7a72; --cat-nutrition: #eb9a4a; --cat-recovery: #5daedc; --cat-technique: #62b67f; --cat-gear: #ad86e0;
+    --bar-bg: #2a2e36; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15171c; --surface: #1d2027; --ink: #eceae4; --muted: #9a9fab; --line: #2e323b;
+  --accent: #7c9cf0; --good: #4cc08a; --warn: #e0a84a; --bad: #ec7a72;
+  --cat-food: #eb9a4a; --cat-animal: #62b67f; --cat-goods: #ad86e0; --cat-nature: #5daedc; --cat-other: #8f949d;
+  --cat-volume: #ec7a72; --cat-nutrition: #eb9a4a; --cat-recovery: #5daedc; --cat-technique: #62b67f; --cat-gear: #ad86e0;
+  --bar-bg: #2a2e36; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.6; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 56px; display: grid; gap: 36px; }
+h1, h2 { font-family: var(--display); text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+h1 { font-size: clamp(26px, 4vw, 36px); font-weight: 700; }
+h2 { font-size: 20px; font-weight: 600; }
+p { margin: 0; }
+.muted { color: var(--muted); }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible, th button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.top { display: grid; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 18px; }
+header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px; }
+.vs { font-family: var(--display); color: var(--muted); font-weight: 500; font-size: 14px; letter-spacing: 0.06em; }
+.stamp { font-size: 13px; color: var(--muted); }
+.stamp b { color: var(--ink); font-weight: 600; }
+
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.tabs button { all: unset; cursor: pointer; font-family: var(--display); font-weight: 600; font-size: 14px;
+  padding: 7px 16px; border-radius: 99px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); }
+.tabs button[aria-selected="true"] { border-color: var(--accent); color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, var(--surface)); }
+.tabs .cnt { font-family: var(--mono); font-weight: 400; opacity: .7; margin-left: 6px; font-size: 12px; }
+.range { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; font-size: 13px; color: var(--muted); }
+.range .presets { display: flex; gap: 6px; }
+.range .presets button { all: unset; cursor: pointer; font-family: var(--display); font-weight: 600; font-size: 13px;
+  padding: 5px 12px; border-radius: 99px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); }
+.range .presets button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface)); }
+.range label { display: inline-flex; align-items: center; gap: 6px; }
+.range input { font: inherit; font-family: var(--mono); font-size: 13px; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 7px; padding: 4px 8px; }
+.rnote { font-size: 12px; font-family: var(--mono); }
+
+section { display: grid; gap: 14px; min-width: 0; }
+.sec-head { display: grid; gap: 4px; }
+
+.platforms { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.plat { background: var(--surface); padding: 16px 18px; display: grid; gap: 6px; align-content: start; }
+.plat .name { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-weight: 600; }
+.plat .big { font-family: var(--mono); font-size: 26px; font-weight: 500; line-height: 1.2; }
+.plat .sub { font-size: 13px; color: var(--muted); }
+.delta { font-family: var(--mono); font-size: 12px; }
+.delta.up { color: var(--good); }
+.pill { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; padding: 2px 8px; border-radius: 99px; border: 1px solid currentColor; white-space: nowrap; }
+.pill.good { color: var(--good); }
+.pill.warn { color: var(--warn); }
+.pill.bad { color: var(--bad); }
+
+.cats { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { padding: 9px 12px; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--line); }
+th:first-child, td:first-child { text-align: left; }
+th { font-weight: 600; font-size: 12px; color: var(--muted); letter-spacing: 0.03em; background: var(--surface); }
+tbody tr:last-child td { border-bottom: 0; }
+td.best { color: var(--good); font-weight: 600; }
+td.worst { color: var(--bad); font-weight: 600; }
+.chip { display: inline-flex; align-items: center; gap: 6px; }
+.chip::before { content: ""; width: 9px; height: 9px; border-radius: 2px; background: var(--c, var(--cat-other)); flex: none; }
+.note { font-size: 13px; color: var(--muted); max-width: 70ch; }
+
+.bars { display: grid; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.bar-row { display: grid; grid-template-columns: minmax(120px, 210px) 1fr 52px; align-items: center; gap: 10px; font-size: 13px; }
+.bar-row .lbl { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.track { position: relative; height: 14px; background: var(--bar-bg); border-radius: 3px; }
+.fill { position: absolute; inset: 0 auto 0 0; border-radius: 3px; background: var(--c, var(--cat-other)); }
+.mark { position: absolute; top: -4px; bottom: -4px; width: 0; border-left: 2px dashed var(--ink); opacity: .55; }
+.bar-row .v { text-align: right; }
+.bar-row.young { opacity: .5; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--muted); }
+
+.trend { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; overflow-x: auto; }
+.trend svg { display: block; width: 100%; min-width: 520px; height: auto; }
+.trend text { fill: var(--muted); font-family: var(--mono); font-size: 11px; }
+.empty { padding: 22px; text-align: center; color: var(--muted); font-size: 14px; }
+
+.ledger { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); max-height: 640px; }
+.ledger thead th { position: sticky; top: 0; z-index: 1; }
+.ledger th button { all: unset; cursor: pointer; display: inline-flex; gap: 4px; align-items: center; }
+.ledger th button[aria-sort]::after { content: attr(data-arrow); color: var(--accent); }
+.ledger td.pair { max-width: 230px; overflow: hidden; text-overflow: ellipsis; }
+.ledger .grp { border-left: 1px solid var(--line); }
+.tag-new { font-size: 10px; font-weight: 600; color: var(--warn); margin-left: 6px; }
+.links a { margin-left: 6px; font-size: 12px; text-decoration: none; }
+.hi { color: var(--good); font-weight: 600; }
+.lo { color: var(--bad); font-weight: 600; }
+
+.checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.checklist li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.checklist li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; border: 2px solid var(--accent); border-radius: 3px; }
+.checklist b { font-weight: 600; }
+footer { font-size: 12px; color: var(--muted); }
+
+@media (max-width: 560px) {
+  .bar-row { grid-template-columns: 110px 1fr 44px; }
+  .plat .big { font-size: 22px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .fill { transition: width .4s ease; }
+}
+</style>
+
+</head><body>
+<div class="wrap">
+  <div class="top">
+    <header>
+      <div>
+        <div class="vs" id="eyebrow">A vs B · รายงานช่อง</div>
+        <h1 id="title">สถิติต่างกันยังไง</h1>
+      </div>
+      <p class="stamp" id="stamp">กำลังโหลดข้อมูล…</p>
+    </header>
+    <div class="tabs" id="tabs" role="tablist" aria-label="เลือกช่อง"></div>
+    <div class="range" id="range">
+      <div class="presets" role="group" aria-label="ช่วงเวลา">
+        <button type="button" data-d="7">7 วัน</button>
+        <button type="button" data-d="30">30 วัน</button>
+        <button type="button" data-d="0">ทั้งหมด</button>
+      </div>
+      <label for="from">จาก <input type="date" id="from"></label>
+      <label for="to">ถึง <input type="date" id="to"></label>
+      <span class="rnote" id="rnote"></span>
+    </div>
+  </div>
+
+  <section aria-labelledby="h-plat">
+    <div class="sec-head">
+      <h2 id="h-plat">ภาพรวมแต่ละช่องทาง</h2>
+      <p class="muted note">ยอดรวมของทุกคลิปที่ลงแล้ว ตัวเลขสีเขียวคือที่เพิ่มขึ้นจากรอบเก็บข้อมูลก่อนหน้า</p>
+    </div>
+    <div class="platforms" id="platforms"><div class="plat empty">ยังไม่มีข้อมูล ระบบจะเติมให้หลังเก็บสถิติรอบแรก</div></div>
+  </section>
+
+  <section aria-labelledby="h-cat">
+    <div class="sec-head">
+      <h2 id="h-cat">หมวดไหนไปได้ดี</h2>
+      <p class="muted note" id="n-cat">ค่ากลางของคลิปที่ลงมาแล้วอย่างน้อย 3 วัน ช่องเขียวคือหมวดที่ดีสุด ช่องแดงคือแย่สุด
+        "ปัดทิ้ง" = % คนที่ปัดผ่านใน 3 วินาทีแรกบน IG (ต่ำดี) · "ดูต่อ" = % วิว YouTube ที่ดูเลยช่วงแรก (สูงดี)</p>
+    </div>
+    <div class="cats"><table id="cats"><tbody><tr><td class="empty">ยังไม่มีข้อมูล</td></tr></tbody></table></div>
+  </section>
+
+  <section aria-labelledby="h-skip">
+    <div class="sec-head">
+      <h2 id="h-skip">3 วินาทีแรก: คนปัดทิ้งกี่ %</h2>
+      <p class="muted note" id="n-skip">อัตราปัดทิ้งบน Instagram ต่อคลิป เรียงจากดีไปแย่ เส้นประคือ 42% คลิปที่ต่ำกว่าเส้นมักได้วิว IG หลักพัน คลิปที่ลงไม่ถึง 3 วันแสดงจาง</p>
+    </div>
+    <div class="legend" id="legend"></div>
+    <div class="bars" id="bars"><div class="empty">ยังไม่มีข้อมูล</div></div>
+  </section>
+
+  <section aria-labelledby="h-trend">
+    <div class="sec-head">
+      <h2 id="h-trend">วิวสะสมตามวัน</h2>
+      <p class="muted note">ยอดวิวรวมทุกคลิปในแต่ละรอบที่เก็บข้อมูล (เก็บวันละครั้ง)</p>
+    </div>
+    <div class="trend" id="trend"><div class="empty">กราฟจะขึ้นเมื่อเก็บข้อมูลครบ 2 วันขึ้นไป</div></div>
+  </section>
+
+  <section aria-labelledby="h-ledger">
+    <div class="sec-head">
+      <h2 id="h-ledger">ทุกคลิป</h2>
+      <p class="muted note">กดหัวคอลัมน์เพื่อเรียง ตัวเขียว/แดงคือดีสุด/แย่สุด 5 อันดับของคอลัมน์นั้น ค่า YouTube "ดูต่อ" กับ "ดูเฉลี่ย" ของคลิปใหม่จะขึ้นช้า 2–3 วัน</p>
+    </div>
+    <div class="ledger"><table id="ledger"><tbody><tr><td class="empty">ยังไม่มีข้อมูล</td></tr></tbody></table></div>
+  </section>
+
+  <section aria-labelledby="h-next">
+    <div class="sec-head">
+      <h2 id="h-next">เช็กลิสต์ก่อนทำคลิปชุดถัดไป</h2>
+      <p class="muted note" id="n-next">สรุปจากข้อมูล 25 คลิปแรก (13/09–07/10) ใช้รูปแบบ 6 ฉากเดิม ปรับแค่การเลือกหัวข้อกับฉากแรก</p>
+    </div>
+    <ul class="checklist" id="checklist"></ul>
+  </section>
+
+  <footer id="foot">ข้อมูลจาก YouTube Data/Analytics API, Meta Graph API (IG/FB) และ Buffer (TikTok) เก็บอัตโนมัติทุกคืนหลังเที่ยงคืน เลือกช่วงวันที่ด้านบนเพื่อดูย้อนหลัง</footer>
+</div>
+
+<script>
+(function () {
+  const CAT_VAR = {
+    "อาหาร": "--cat-food", "สัตว์": "--cat-animal", "ของใช้/สุขภาพ": "--cat-goods", "ธรรมชาติ/วิทย์": "--cat-nature",
+    "ปริมาณการฝึก": "--cat-volume", "โภชนาการ": "--cat-nutrition", "การฟื้นตัว": "--cat-recovery",
+    "เทคนิคการฝึก": "--cat-technique", "อุปกรณ์/สถานที่": "--cat-gear"
+  };
+  const catColor = c => `var(${CAT_VAR[c] || "--cat-other"})`;
+  const $ = id => document.getElementById(id);
+  const fmt = n => n == null ? "–" : Number(n).toLocaleString("th-TH", { maximumFractionDigits: 1 });
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+  const median = arr => {
+    const v = arr.filter(x => x != null && !Number.isNaN(x)).sort((a, b) => a - b);
+    if (!v.length) return null;
+    const m = v.length >> 1;
+    return v.length % 2 ? v[m] : (v[m - 1] + v[m]) / 2;
+  };
+  const daysBetween = (a, b) => Math.round((new Date(b) - new Date(a)) / 86400000);
+  const shortDay = d => { const [, m, dd] = d.split("-"); return `${+dd}/${+m}`; };
+  const pairText = x => x.b ? `${x.a} / ${x.b}` : x.a;
+
+  // ---- ช่องที่ดูได้ แต่ละช่องอ่านจากคอลเลกชันของตัวเอง
+  const CHANNELS = [
+    {
+      id: "diff",
+      tab: "ต่างกันยังไง",
+      eyebrow: "A vs B · รายงานช่อง",
+      title: "สถิติต่างกันยังไง",
+      dir: "data/diff",
+      pairLabel: "คู่เทียบ",
+      catNote: 'ค่ากลางของคลิปที่ลงมาแล้วอย่างน้อย 3 วัน ช่องเขียวคือหมวดที่ดีสุด ช่องแดงคือแย่สุด "ปัดทิ้ง" = % คนที่ปัดผ่านใน 3 วินาทีแรกบน IG (ต่ำดี) · "ดูต่อ" = % วิว YouTube ที่ดูเลยช่วงแรก (สูงดี)',
+      bars: {
+        key: "ig_skip", title: "3 วินาทีแรก: คนปัดทิ้งกี่ %", max: 80, line: 42, better: "low",
+        suffix: "%", ticks: ["0%", "40%", "80%"],
+        note: "อัตราปัดทิ้งบน Instagram ต่อคลิป เรียงจากดีไปแย่ เส้นประคือ 42% คลิปที่ต่ำกว่าเส้นมักได้วิว IG หลักพัน คลิปที่ลงไม่ถึง 3 วันแสดงจาง"
+      },
+      nextNote: "สรุปจากข้อมูล 25 คลิปแรก (13/09–07/10) ใช้รูปแบบ 6 ฉากเดิม ปรับแค่การเลือกหัวข้อกับฉากแรก",
+      checklist: [
+        "<b>เลือกหัวข้อเอนไปทางอาหารกับสัตว์</b> สองหมวดนี้คนปัดทิ้งราว 39–42% ส่วนหมวดยา ของใช้ ตัวเลข หรือค่ามาตรฐาน คนปัดทิ้งเกือบ 60% และวิว IG ต่ำกว่าหลายเท่า",
+        "<b>หาความเข้าใจผิดใกล้ตัว</b> แบบ \"เลิกใส่ผงชูรสแต่ใช้ผงปรุงรสแทน\" คลิปนี้ได้ 14k วิวบน YouTube และผู้ติดตามเพิ่ม 34 คน มากที่สุดของช่อง",
+        "<b>คู่ที่เป็นของนามธรรม ภาพแรกต้องเห็นแล้วรู้เลย</b> ฉาก \"นี่คือ A\" ใช้ภาพที่คนจำได้ทันทีและน่าดู เลี่ยงภาพขวด กล่อง หรือฉลากทั่วไป",
+        "<b>แคปชั่น TikTok ขึ้นต้นด้วยคำตอบ</b> หลังเปลี่ยนเมื่อ 29/09 เวลาดูเฉลี่ยขึ้นจากราว 8 เป็นราว 10 วินาที",
+        "<b>ความยาวยังไม่ต้องตัด</b> YouTube ดูเฉลี่ยราว 75% ของคลิป และบางคลิปเกิน 100% เพราะคนดูวนซ้ำ",
+        "<b>Facebook ไม่ใช้ตัดสินคลิป</b> เพจมีผู้ติดตาม 2 คน คลิปจึงแทบไม่มีคนเห็น ระบบยังโพสต์ให้ตามปกติ"
+      ]
+    },
+    {
+      id: "muscle",
+      tab: "The Muscle Manual",
+      eyebrow: "ช่องกล้ามเนื้อ ภาษาอังกฤษ · รายงานช่อง",
+      title: "สถิติ The Muscle Manual",
+      dir: "data/mm",
+      pairLabel: "หัวข้อ",
+      catNote: 'ค่ากลางของคลิปที่ลงมาแล้วอย่างน้อย 3 วัน ช่องเขียวคือหมวดที่ดีสุด ช่องแดงคือแย่สุด ค่า YouTube "ดูต่อ" ยังว่างเพราะ Analytics ของช่องที่เพิ่งเปิดตามหลังราว 1-3 วัน',
+      bars: {
+        key: "ig_skip", title: "3 วินาทีแรก: คนปัดทิ้งกี่ %", max: 100, line: 42, better: "low",
+        suffix: "%", ticks: ["0%", "50%", "100%"],
+        note: "อัตราปัดทิ้งบน Instagram ต่อคลิป เรียงจากดีไปแย่ เส้นประคือ 42% ซึ่งเป็นเส้นที่ช่องต่างกันยังไงใช้ ใช้เทียบกันได้ตรง ๆ คลิปที่ลงไม่ถึง 3 วันแสดงจาง"
+      },
+      nextNote: "ทบทวน 10/10 หลังลง 4 คลิป ข้อสรุปเปลี่ยนจากรอบแรก เพราะแยกตามแพลตฟอร์มแล้วเห็นคนละภาพ",
+      checklist: [
+        "<b>YouTube ไปได้ดีกว่าที่สรุปไว้รอบแรก</b> คนดูเฉลี่ย 24–26 วินาที คิดเป็น 39% ของคลิป ส่วนช่องต่างกันยังไงดูเฉลี่ย 77% แต่เป็นแค่ 19 วินาที — <b>คิดเป็นวินาทีจริง ช่องนี้รั้งคนได้นานกว่า</b>",
+        "<b>คนที่มาจากการค้นหาดู 44 วินาทีจาก 66</b> คิดเป็น 69% ความยาวระดับนี้คือข้อได้เปรียบบน YouTube Search ไม่ใช่ข้อเสีย ถ้าตัดเหลือ 30 วินาทีจะทิ้งจุดนี้ไป",
+        "<b>ปัญหาอยู่ที่ IG กับ TikTok ไม่ใช่ความยาว</b> IG ปัดทิ้ง 72–81% TikTok ดูเฉลี่ย 2.9–3.7 วินาที แต่ YouTube ที่ผู้ชมเป็นสหรัฐฯ แล้วกลับรั้งคนได้ปกติ ตัวแปรที่ต่างคือผู้ชม ไม่ใช่คลิป",
+        "<b>ยังอย่าเพิ่งตัดให้สั้น</b> สัดส่วนคนไทยกำลังลดจาก 70% เหลือ 40% ถ้าตัดคลิปตอนนี้จะเปลี่ยนความยาวกับผู้ชมพร้อมกัน แล้วแยกไม่ออกว่าอะไรทำให้ดีขึ้น",
+        "<b>จุดวัดใหม่คือ 15/10</b> ตอนนั้น YouTube Analytics จะตามทันคลิป #14–#17 ถ้าดูเฉลี่ยยังไม่ต่ำกว่า 35% และสัดส่วนคนไทยลดต่อ ให้คงรูปแบบ 60 วินาทีไว้ ถ้าต่ำกว่า 30% ทั้งที่ผู้ชมเป็นต่างชาติแล้ว ค่อยตัดเหลือ 25–30 วินาที",
+        "<b>ที่ต้องแก้คือ 3 วินาทีแรก ไม่ใช่ความยาวรวม</b> ถ้าจะแก้ก่อนถึงจุดวัด ให้แก้ฉากเปิดอย่างเดียว คลิปยาวที่เปิดแรงอยู่รอดบนฟีดได้ ส่วนคลิปสั้นที่เปิดจืดก็ตายเหมือนกัน",
+        "<b>วิวน้อยคือปัญหาการกระจาย ไม่ใช่การรั้งคนดู</b> IG ~117 YT ~80 TT ~170 ต่อคลิป เทียบกับช่องแรกที่ IG 1,937 YT 1,427 — คนที่ได้เห็นดูจนจบพอสมควร แต่คนเห็นยังน้อยมาก",
+        "<b>ตัวเลขทั้งหมดยังอยู่บนฐานเล็กมาก</b> YouTube รวม 122 วิว 4 คลิป ใช้ชี้ทิศได้ แต่ยังไม่พอฟันธง"
+      ]
+    }
+  ];
+
+  let chIndex = 0;
+  const fromHash = CHANNELS.findIndex(c => c.id === location.hash.replace("#", ""));
+  if (fromHash >= 0) chIndex = fromHash;
+  else { try { const s = localStorage.getItem("dashChannel"); const i = CHANNELS.findIndex(c => c.id === s); if (i >= 0) chIndex = i; } catch (e) {} }
+
+  function renderPlatforms(cur, prev) {
+    const d = (a, b) => (prev && b != null && a != null && a - b > 0) ? `<span class="delta up">+${fmt(a - b)}</span>` : "";
+    const P = prev || {};
+    const pc = P.channel || {}, pt = P.totals || {};
+    const c = cur.channel, t = cur.totals;
+    const clips = cur.clips;
+    const ttAvg = median(clips.map(x => x.tt_avg_sec).filter(x => x > 0));
+    const fbStatus = (c.fb_followers || 0) < 50 ? '<span class="pill bad">แทบไม่มีคนเห็น</span>' : '<span class="pill good">ปกติ</span>';
+    $("platforms").innerHTML = `
+      <div class="plat"><div class="name">YouTube <span class="pill good">ช่องหลัก</span></div>
+        <div class="big">${fmt(t.yt_views)} ${d(t.yt_views, pt.yt_views)}</div>
+        <div class="sub">วิวรวม · ผู้ติดตาม <span class="num">${fmt(c.yt_subs)}</span> ${d(c.yt_subs, pc.yt_subs)}</div></div>
+      <div class="plat"><div class="name">Instagram <span class="pill warn">ขึ้นลงแรง</span></div>
+        <div class="big">${fmt(t.ig_views)} ${d(t.ig_views, pt.ig_views)}</div>
+        <div class="sub">วิวรวม · ผู้ติดตาม <span class="num">${fmt(c.ig_followers)}</span> ${d(c.ig_followers, pc.ig_followers)}</div></div>
+      <div class="plat"><div class="name">TikTok <span class="pill warn">รั้งคนได้น้อย</span></div>
+        <div class="big">${fmt(t.tt_views)} ${d(t.tt_views, pt.tt_views)}</div>
+        <div class="sub">วิวรวม · ดูเฉลี่ย <span class="num">${fmt(ttAvg)}</span> วิ/คลิป</div></div>
+      <div class="plat"><div class="name">Facebook ${fbStatus}</div>
+        <div class="big">${fmt(t.fb_plays)} ${d(t.fb_plays, pt.fb_plays)}</div>
+        <div class="sub">ครั้งที่เล่นรวม · ผู้ติดตามเพจ <span class="num">${fmt(c.fb_followers)}</span></div></div>`;
+  }
+
+  function renderCats(cur) {
+    const mature = cur.clips.filter(x => x.posted && daysBetween(x.posted, cur.date) >= 3);
+    const groups = {};
+    mature.forEach(x => (groups[x.cat] = groups[x.cat] || []).push(x));
+    const cols = [
+      { k: "ig_views", label: "วิว IG", better: "high" },
+      { k: "ig_skip", label: "IG ปัดทิ้ง %", better: "low" },
+      { k: "yt_eng_pct", label: "YT ดูต่อ %", better: "high" },
+      { k: "yt_views", label: "วิว YT", better: "high" },
+      { k: "tt_views", label: "วิว TikTok", better: "high" },
+      { k: "tt_avg_sec", label: "TikTok ดูเฉลี่ย (วิ)", better: "high" },
+    ];
+    const rows = Object.entries(groups).map(([cat, xs]) => ({ cat, n: xs.length, m: Object.fromEntries(cols.map(c => [c.k, median(xs.map(x => x[c.k]))])) }));
+    rows.sort((a, b) => (b.m.ig_views || 0) - (a.m.ig_views || 0));
+    if (!rows.length) {
+      $("cats").innerHTML = '<tbody><tr><td class="empty">ยังไม่มีคลิปที่ลงครบ 3 วัน</td></tr></tbody>';
+      return;
+    }
+    const ext = {};
+    cols.forEach(c => {
+      const v = rows.map(r => r.m[c.k]).filter(x => x != null);
+      ext[c.k] = rows.length > 1 ? (c.better === "high" ? [Math.max(...v), Math.min(...v)] : [Math.min(...v), Math.max(...v)]) : [null, null];
+    });
+    $("cats").innerHTML = `<thead><tr><th>หมวด</th><th>คลิป</th>${cols.map(c => `<th>${c.label}</th>`).join("")}</tr></thead><tbody>` +
+      rows.map(r => `<tr><td><span class="chip" style="--c:${catColor(r.cat)}">${esc(r.cat)}</span></td><td class="num">${r.n}</td>` +
+        cols.map(c => {
+          const v = r.m[c.k];
+          const cls = v == null ? "" : v === ext[c.k][0] ? "best" : v === ext[c.k][1] ? "worst" : "";
+          return `<td class="num ${cls}">${fmt(v == null ? null : Math.round(v * 10) / 10)}</td>`;
+        }).join("") + "</tr>").join("") + "</tbody>";
+  }
+
+  function renderLegend(cur) {
+    const cats = [...new Set(cur.clips.map(x => x.cat))];
+    $("legend").innerHTML = cats.map(c => `<span class="chip" style="--c:${catColor(c)}">${esc(c)}</span>`).join("");
+  }
+
+  function renderBars(cur, cfg) {
+    const B = cfg.bars;
+    const val = x => B.derive ? B.derive(x) : x[B.key];
+    const xs = cur.clips.filter(x => val(x) != null)
+      .sort((a, b) => B.better === "low" ? val(a) - val(b) : val(b) - val(a));
+    if (!xs.length) {
+      $("bars").innerHTML = '<div class="empty">ยังไม่มีข้อมูลสำหรับกราฟนี้</div>';
+      return;
+    }
+    $("bars").innerHTML = xs.map(x => {
+      const v = val(x);
+      const young = daysBetween(x.posted, cur.date) < 3;
+      const w = Math.min(100, v / B.max * 100);
+      return `<div class="bar-row${young ? " young" : ""}" title="${esc(pairText(x))} · ${shortDay(x.posted)}">
+        <span class="lbl">${esc(pairText(x))}</span>
+        <span class="track"><span class="fill" style="width:${w}%;--c:${catColor(x.cat)}"></span><span class="mark" style="left:${B.line / B.max * 100}%"></span></span>
+        <span class="v num">${fmt(Math.round(v * 10) / 10)}${B.suffix}</span></div>`;
+    }).join("") + `<div class="bar-row"><span></span><span class="muted num" style="display:flex;justify-content:space-between;font-size:11px">${B.ticks.map(t => `<span>${t}</span>`).join("")}</span><span></span></div>`;
+  }
+
+  function renderTrend(snaps) {
+    const s = snaps.slice().sort((a, b) => a.date.localeCompare(b.date));
+    if (s.length < 2) {
+      $("trend").innerHTML = '<div class="empty">กราฟจะขึ้นเมื่อเก็บข้อมูลครบ 2 วันขึ้นไป</div>';
+      return;
+    }
+    const series = [
+      { k: "yt_views", name: "YouTube", c: "var(--bad)" },
+      { k: "ig_views", name: "Instagram", c: "var(--cat-goods)" },
+      { k: "tt_views", name: "TikTok", c: "var(--ink)" },
+    ];
+    const W = 720, H = 240, L = 64, R = 96, T = 14, B = 30;
+    const maxV = Math.max(...s.flatMap(x => series.map(se => x.totals[se.k] || 0)));
+    const step = Math.pow(10, Math.floor(Math.log10(maxV || 1)));
+    const top = Math.ceil(maxV / step) * step || 1;
+    const x = i => L + (s.length === 1 ? 0 : i * (W - L - R) / (s.length - 1));
+    const y = v => T + (H - T - B) * (1 - v / top);
+    let g = "";
+    for (let i = 0; i <= 4; i++) {
+      const v = top * i / 4;
+      g += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-width="1"/><text x="${L - 8}" y="${y(v) + 4}" text-anchor="end">${fmt(v)}</text>`;
+    }
+    const every = Math.max(1, Math.ceil(s.length / 8));
+    s.forEach((p, i) => { if (i % every === 0 || i === s.length - 1) g += `<text x="${x(i)}" y="${H - 8}" text-anchor="middle">${shortDay(p.date)}</text>`; });
+    series.forEach(se => {
+      const pts = s.map((p, i) => `${x(i)},${y(p.totals[se.k] || 0)}`).join(" ");
+      const last = s[s.length - 1].totals[se.k] || 0;
+      g += `<polyline points="${pts}" fill="none" stroke="${se.c}" stroke-width="2"/>
+            <circle cx="${x(s.length - 1)}" cy="${y(last)}" r="3.5" fill="${se.c}"/>
+            <text x="${x(s.length - 1) + 8}" y="${y(last) + 4}" style="fill:${se.c}">${se.name}</text>`;
+    });
+    $("trend").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="กราฟวิวสะสมตามวัน">${g}</svg>`;
+  }
+
+  // ---- ledger
+  const COLS = [
+    { k: "posted", label: "วันที่ลง", fmt: v => shortDay(v), grp: false },
+    { k: "pair", label: "คู่เทียบ", text: true },
+    { k: "cat", label: "หมวด", text: true },
+    { k: "dur", label: "ยาว (วิ)" },
+    { k: "yt_views", label: "YT วิว", grp: true, rank: "high" },
+    { k: "yt_eng_pct", label: "YT ดูต่อ %", rank: "high" },
+    { k: "yt_avg_pct", label: "YT ดูเฉลี่ย %", rank: "high" },
+    { k: "yt_subs", label: "YT +ผู้ติดตาม", rank: "high" },
+    { k: "ig_views", label: "IG วิว", grp: true, rank: "high" },
+    { k: "ig_skip", label: "IG ปัดทิ้ง %", rank: "low" },
+    { k: "ig_avg_sec", label: "IG ดูเฉลี่ย (วิ)", rank: "high" },
+    { k: "ig_shares", label: "IG แชร์", rank: "high" },
+    { k: "ig_saved", label: "IG บันทึก", rank: "high" },
+    { k: "tt_views", label: "TT วิว", grp: true, rank: "high" },
+    { k: "tt_avg_sec", label: "TT ดูเฉลี่ย (วิ)", rank: "high" },
+    { k: "tt_likes", label: "TT ไลก์", rank: "high" },
+    { k: "fb_plays", label: "FB เล่น", grp: true },
+  ];
+  let sortKey = "posted", sortDir = "desc", current = null, currentCfg = CHANNELS[chIndex];
+  try { const s = JSON.parse(localStorage.getItem("ledgerSort") || "null"); if (s) { sortKey = s.k; sortDir = s.d; } } catch (e) {}
+
+  function renderLedger() {
+    if (!current) return;
+    const rows = current.clips.map(x => ({ ...x, pair: pairText(x) }));
+    const ranks = {};
+    COLS.filter(c => c.rank).forEach(c => {
+      const v = rows.filter(r => r[c.k] != null && daysBetween(r.posted, current.date) >= 3).map(r => r[c.k]).sort((a, b) => a - b);
+      if (v.length < 8) return;
+      ranks[c.k] = c.rank === "high" ? [v[v.length - 5], v[4]] : [v[4], v[v.length - 5]];
+    });
+    rows.sort((a, b) => {
+      const A = a[sortKey], B = b[sortKey];
+      if (A == null && B == null) return 0;
+      if (A == null) return 1;
+      if (B == null) return -1;
+      const r = typeof A === "string" ? A.localeCompare(B, "th") : A - B;
+      return sortDir === "asc" ? r : -r;
+    });
+    const head = `<thead><tr>${COLS.map(c => {
+      const on = c.k === sortKey;
+      const label = c.k === "pair" ? currentCfg.pairLabel : c.label;
+      return `<th class="${c.grp ? "grp" : ""}"><button type="button" data-k="${c.k}" ${on ? `aria-sort="${sortDir === "asc" ? "ascending" : "descending"}" data-arrow="${sortDir === "asc" ? "▲" : "▼"}"` : ""}>${label}</button></th>`;
+    }).join("")}</tr></thead>`;
+    const body = rows.map(r => {
+      const young = daysBetween(r.posted, current.date) < 3;
+      return `<tr>${COLS.map(c => {
+        const v = r[c.k];
+        let cls = (c.grp ? "grp " : "") + (c.text ? "" : "num ");
+        if (ranks[c.k] && v != null && !young) {
+          const [good, bad] = ranks[c.k];
+          if (c.rank === "high") cls += v >= good ? "hi" : v <= bad ? "lo" : "";
+          else cls += v <= good ? "hi" : v >= bad ? "lo" : "";
+        }
+        if (c.k === "pair") {
+          const links = [["YT", r.yt_url], ["IG", r.ig_url], ["FB", r.fb_url]].filter(l => l[1]).map(l => `<a href="${esc(l[1])}" target="_blank" rel="noopener">${l[0]}</a>`).join("");
+          return `<td class="pair">${esc(v)}${young ? '<span class="tag-new">ใหม่</span>' : ""}<span class="links">${links}</span></td>`;
+        }
+        if (c.k === "cat") return `<td><span class="chip" style="--c:${catColor(v)}">${esc(v)}</span></td>`;
+        return `<td class="${cls}">${c.fmt ? c.fmt(v) : fmt(v)}</td>`;
+      }).join("")}</tr>`;
+    }).join("");
+    $("ledger").innerHTML = head + "<tbody>" + body + "</tbody>";
+  }
+  $("ledger").addEventListener("click", e => {
+    const b = e.target.closest("button[data-k]");
+    if (!b) return;
+    const k = b.dataset.k;
+    if (k === sortKey) sortDir = sortDir === "asc" ? "desc" : "asc";
+    else { sortKey = k; sortDir = COLS.find(c => c.k === k).text ? "asc" : "desc"; }
+    try { localStorage.setItem("ledgerSort", JSON.stringify({ k: sortKey, d: sortDir })); } catch (e2) {}
+    renderLedger();
+  });
+
+  function applyChrome(cfg, clipCount) {
+    $("eyebrow").textContent = cfg.eyebrow;
+    $("title").textContent = cfg.title;
+    $("h-skip").textContent = cfg.bars.title;
+    $("n-skip").textContent = cfg.bars.note;
+    $("n-cat").textContent = cfg.catNote;
+    $("n-next").textContent = cfg.nextNote;
+    $("checklist").innerHTML = cfg.checklist.map(t => `<li><span>${t}</span></li>`).join("");
+    $("tabs").querySelectorAll("button").forEach((b, i) => {
+      const on = CHANNELS[i].id === cfg.id;
+      b.setAttribute("aria-selected", on ? "true" : "false");
+      if (on && clipCount != null) b.querySelector(".cnt").textContent = clipCount;
+    });
+  }
+
+  const snapCache = new Map();
+  async function loadSnapshot(cfg, date) {
+    const key = cfg.dir + "/" + date;
+    if (snapCache.has(key)) return snapCache.get(key);
+    try {
+      const r = await fetch(`${cfg.dir}/snapshot-${date}.json`, { cache: "no-cache" });
+      if (!r.ok) throw new Error(String(r.status));
+      const j = await r.json();
+      snapCache.set(key, j);
+      return j;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function showEmpty(cfg, msg) {
+    current = null;
+    $("stamp").textContent = msg;
+    $("platforms").innerHTML = '<div class="plat empty">ยังไม่มีข้อมูล</div>';
+    $("cats").innerHTML = '<tbody><tr><td class="empty">ยังไม่มีข้อมูล</td></tr></tbody>';
+    $("bars").innerHTML = '<div class="empty">ยังไม่มีข้อมูล</div>';
+    $("legend").innerHTML = "";
+    $("trend").innerHTML = '<div class="empty">กราฟจะขึ้นเมื่อเก็บข้อมูลครบ 2 วันขึ้นไป</div>';
+    $("ledger").innerHTML = '<tbody><tr><td class="empty">ยังไม่มีข้อมูล</td></tr></tbody>';
+    applyChrome(cfg, 0);
+  }
+
+  // win เรียงจากวันเก่าไปใหม่ หัวแถวใช้เทียบส่วนต่าง ท้ายแถวคือวันที่แสดงผล
+  async function render(cfg, win) {
+    currentCfg = cfg;
+    if (!win.length) {
+      showEmpty(cfg, allSnaps.length
+        ? "ช่วงวันที่ที่เลือกไม่มีข้อมูล ลองขยายช่วง หรือกดปุ่ม ทั้งหมด"
+        : "ช่องนี้ยังไม่มีข้อมูล ระบบจะเติมให้หลังเก็บสถิติรอบแรก");
+      return;
+    }
+    renderTrend(win);
+    const newest = win[win.length - 1];
+    const prev = win.length > 1 ? win[0] : null;
+    const snap = await loadSnapshot(cfg, newest.date);
+    if (currentCfg !== cfg) return;          // สลับแท็บระหว่างรอโหลด
+    if (!snap) {
+      showEmpty(cfg, `อ่านไฟล์ของวันที่ ${shortDay(newest.date)} ไม่สำเร็จ ลองรีเฟรชหน้าอีกครั้ง`);
+      return;
+    }
+    current = snap;
+    const t = new Date(snap.updatedAt);
+    $("stamp").innerHTML = `อัปเดตล่าสุด <b>${t.toLocaleString("th-TH", { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Bangkok" })}</b> · ${snap.clips.length} คลิป` +
+      (prev ? ` · ส่วนต่างเทียบกับ ${shortDay(prev.date)}` : "");
+    applyChrome(cfg, snap.clips.length);
+    renderPlatforms(snap, prev);
+    renderCats(snap);
+    renderLegend(snap);
+    renderBars(snap, cfg);
+    renderLedger();
+  }
+
+  // ---- แท็บ
+  $("tabs").innerHTML = CHANNELS.map((c, i) =>
+    `<button type="button" role="tab" data-i="${i}" aria-selected="${i === chIndex}">${esc(c.tab)}<span class="cnt"></span></button>`).join("");
+
+  // ---- ช่วงวันที่
+  let allSnaps = [], preset = 7;
+  try { const p = localStorage.getItem("dashRange"); if (p != null) preset = +p; } catch (e) {}
+
+  function bounds() {
+    const ds = allSnaps.map(s => s.date).sort();
+    return [ds[0] || "", ds[ds.length - 1] || ""];
+  }
+  function applyPreset() {
+    const [lo, hi] = bounds();
+    if (!hi) return;
+    let from = lo;
+    if (preset > 0) {
+      const d = new Date(hi + "T00:00:00");
+      d.setDate(d.getDate() - (preset - 1));
+      const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+      from = iso > lo ? iso : lo;
+    }
+    $("from").value = from;
+    $("to").value = hi;
+  }
+  function applyRange() {
+    const [lo, hi] = bounds();
+    $("from").min = $("to").min = lo;
+    $("from").max = $("to").max = hi;
+    $("range").querySelectorAll("button[data-d]")
+      .forEach(b => b.setAttribute("aria-pressed", +b.dataset.d === preset ? "true" : "false"));
+    const f = $("from").value || lo, t = $("to").value || hi;
+    const win = allSnaps.filter(s => s.date >= f && s.date <= t);
+    $("rnote").textContent = allSnaps.length
+      ? `เก็บไว้ ${allSnaps.length} วัน (${shortDay(lo)}–${shortDay(hi)}) · เลือกอยู่ ${win.length}`
+      : "";
+    render(currentCfg, win);
+  }
+  $("range").addEventListener("click", e => {
+    const b = e.target.closest("button[data-d]");
+    if (!b) return;
+    preset = +b.dataset.d;
+    try { localStorage.setItem("dashRange", String(preset)); } catch (e2) {}
+    applyPreset();
+    applyRange();
+  });
+  ["from", "to"].forEach(id => $(id).addEventListener("change", () => {
+    if ($("from").value && $("to").value && $("from").value > $("to").value) {
+      $(id === "from" ? "to" : "from").value = $(id).value;
+    }
+    preset = -1;                     // ช่วงที่ตั้งเอง ไม่มีปุ่มไหนถูกเลือก (ไม่จำข้ามรอบ)
+    applyRange();
+  }));
+
+  async function openChannel(i) {
+    chIndex = i;
+    const cfg = CHANNELS[i];
+    currentCfg = cfg;
+    try { localStorage.setItem("dashChannel", cfg.id); } catch (e) {}
+    if (location.hash.replace("#", "") !== cfg.id) history.replaceState(null, "", "#" + cfg.id);
+    applyChrome(cfg, null);
+    allSnaps = [];
+    $("stamp").textContent = "กำลังโหลดข้อมูล…";
+    let rows = null;
+    try {
+      const r = await fetch(`${cfg.dir}/trend.json`, { cache: "no-cache" });
+      rows = r.ok ? await r.json() : null;
+    } catch (e) {
+      rows = null;
+    }
+    if (CHANNELS[chIndex].id !== cfg.id) return;   // ผู้ใช้กดสลับแท็บไปแล้ว
+    if (!rows) {
+      showEmpty(cfg, "โหลดข้อมูลไม่สำเร็จ ลองรีเฟรชหน้าอีกครั้ง");
+      return;
+    }
+    allSnaps = rows.filter(x => x && x.date).sort((a, b) => a.date.localeCompare(b.date));
+    if (preset >= 0) applyPreset();
+    applyRange();
+  }
+  $("tabs").addEventListener("click", e => {
+    const b = e.target.closest("button[data-i]");
+    if (b) openChannel(+b.dataset.i);
+  });
+
+  applyChrome(CHANNELS[chIndex], null);
+  openChannel(chIndex);
+})();
+</script>
+</body></html>

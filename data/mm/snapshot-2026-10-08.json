@@ -1,0 +1,54 @@
+{
+  "channel": {
+    "fb_followers": 0,
+    "ig_followers": 1,
+    "yt_subs": 1,
+    "yt_views": 0
+  },
+  "clips": [
+    {
+      "a": "How Many Hard Sets Per Muscle Per Week",
+      "b": "",
+      "cat": "ปริมาณการฝึก",
+      "dur": 66.3,
+      "fb_avg_sec": 28.5,
+      "fb_plays": 8,
+      "fb_url": "https://www.facebook.com/reel/2147520332504309",
+      "ig_avg_sec": 6.1,
+      "ig_comments": 0,
+      "ig_likes": 3,
+      "ig_reach": 99,
+      "ig_saved": 0,
+      "ig_shares": 0,
+      "ig_skip": 71.8,
+      "ig_url": "https://www.instagram.com/reel/DeLWmNyAieh/",
+      "ig_views": 114,
+      "posted": "2026-10-07",
+      "slug": "0012-how-many-hard-sets-per-muscle-per-week",
+      "theme": "How much volume a muscle actually needs per week",
+      "tt_avg_sec": 3.2,
+      "tt_comments": 0,
+      "tt_likes": 7,
+      "tt_reach": 0,
+      "tt_shares": 0,
+      "tt_views": 129,
+      "vid": 12,
+      "yt_avg_pct": null,
+      "yt_avg_sec": null,
+      "yt_comments": 0,
+      "yt_eng_pct": null,
+      "yt_likes": 1,
+      "yt_subs": null,
+      "yt_url": "https://www.youtube.com/shorts/6Sfo522fZ4A",
+      "yt_views": 37
+    }
+  ],
+  "date": "2026-10-08",
+  "totals": {
+    "fb_plays": 8,
+    "ig_views": 114,
+    "tt_views": 129,
+    "yt_views": 37
+  },
+  "updatedAt": "2026-10-08T02:41+07:00"
+}
