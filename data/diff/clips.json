@@ -789,5 +789,28 @@
     "url": "https://www.youtube.com/shorts/z-KkmMWQ4OE"
    }
   }
+ },
+ {
+  "slug": "0034-หมอก-vs-ฝุ่น-pm2-5",
+  "vid": 83,
+  "a": "หมอก",
+  "b": "ฝุ่น PM2.5",
+  "theme": null,
+  "dur": null,
+  "plan": "2026-10-16",
+  "ids": {
+   "facebook": {
+    "id": "1278147977782224",
+    "url": "https://www.facebook.com/reel/1278147977782224"
+   },
+   "instagram": {
+    "id": "18169618036482439",
+    "url": "https://www.instagram.com/reel/DejYFRPgt7d/"
+   },
+   "youtube": {
+    "id": "NBy9MiXZz4Q",
+    "url": "https://www.youtube.com/shorts/NBy9MiXZz4Q"
+   }
+  }
  }
 ]
