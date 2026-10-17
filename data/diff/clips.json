@@ -812,5 +812,28 @@
     "url": "https://www.youtube.com/shorts/NBy9MiXZz4Q"
    }
   }
+ },
+ {
+  "slug": "0038-ข้าวเหนียว-vs-ข้าวเจ้า",
+  "vid": 86,
+  "a": "ข้าวเหนียว",
+  "b": "ข้าวเจ้า",
+  "theme": null,
+  "dur": null,
+  "plan": "2026-10-17",
+  "ids": {
+   "facebook": {
+    "id": "1092014197063241",
+    "url": "https://www.facebook.com/reel/1092014197063241"
+   },
+   "instagram": {
+    "id": "17903755449669609",
+    "url": "https://www.instagram.com/reel/Del83dYiZc2/"
+   },
+   "youtube": {
+    "id": "9iF2ZeGFaaw",
+    "url": "https://www.youtube.com/shorts/9iF2ZeGFaaw"
+   }
+  }
  }
 ]
