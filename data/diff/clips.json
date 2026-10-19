@@ -858,5 +858,28 @@
     "url": "https://www.youtube.com/shorts/LOGhVpVkcyw"
    }
   }
+ },
+ {
+  "slug": "0040-หมูสามชั้น-vs-เบคอน",
+  "vid": 88,
+  "a": "หมูสามชั้น",
+  "b": "เบคอน",
+  "theme": null,
+  "dur": null,
+  "plan": "2026-10-19",
+  "ids": {
+   "facebook": {
+    "id": "1620685966351890",
+    "url": "https://www.facebook.com/reel/1620685966351890"
+   },
+   "instagram": {
+    "id": "17940815949379480",
+    "url": "https://www.instagram.com/reel/DerGdtYlerv/"
+   },
+   "youtube": {
+    "id": "ui-L36q8eYk",
+    "url": "https://www.youtube.com/shorts/ui-L36q8eYk"
+   }
+  }
  }
 ]
