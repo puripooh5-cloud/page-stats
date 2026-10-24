@@ -973,5 +973,28 @@
     "url": "https://www.youtube.com/shorts/qBirt5sTj8E"
    }
   }
+ },
+ {
+  "slug": "0043-ลิง-vs-เอป",
+  "vid": 91,
+  "a": "ลิง",
+  "b": "เอป",
+  "theme": null,
+  "dur": null,
+  "plan": "2026-10-24",
+  "ids": {
+   "facebook": {
+    "id": "2245810539319939",
+    "url": "https://www.facebook.com/reel/2245810539319939"
+   },
+   "instagram": {
+    "id": "18147240448498547",
+    "url": "https://www.instagram.com/reel/De3-cDKAurA/"
+   },
+   "youtube": {
+    "id": "sb9IC2iRCsM",
+    "url": "https://www.youtube.com/shorts/sb9IC2iRCsM"
+   }
+  }
  }
 ]
