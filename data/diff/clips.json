@@ -1011,5 +1011,28 @@
     "url": "https://www.instagram.com/reel/De6jO1CmHL5"
    }
   }
+ },
+ {
+  "slug": "0055-เรือบริแทนนิก-vs-เรือเซนทอร์",
+  "vid": 113,
+  "a": "บริแทนนิก",
+  "b": "เซนทอร์",
+  "theme": null,
+  "dur": null,
+  "plan": "2026-10-26",
+  "ids": {
+   "facebook": {
+    "id": "1112613614854474",
+    "url": "https://www.facebook.com/reel/1112613614854474"
+   },
+   "instagram": {
+    "id": "17988019119095984",
+    "url": "https://www.instagram.com/reel/De9IBeMD6RV/"
+   },
+   "youtube": {
+    "id": "t2aJHehZaWo",
+    "url": "https://www.youtube.com/shorts/t2aJHehZaWo"
+   }
+  }
  }
 ]
