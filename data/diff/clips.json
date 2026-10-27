@@ -1034,5 +1034,28 @@
     "url": "https://www.youtube.com/shorts/t2aJHehZaWo"
    }
   }
+ },
+ {
+  "slug": "0047-ขิง-vs-ข่า",
+  "vid": 95,
+  "a": "ขิง",
+  "b": "ข่า",
+  "theme": null,
+  "dur": null,
+  "plan": "2026-10-27",
+  "ids": {
+   "facebook": {
+    "id": "2088127905169733",
+    "url": "https://www.facebook.com/reel/2088127905169733"
+   },
+   "instagram": {
+    "id": "17978403336152833",
+    "url": "https://www.instagram.com/reel/De_s0a7kwmh/"
+   },
+   "youtube": {
+    "id": "oVXGy0YJ0jg",
+    "url": "https://www.youtube.com/shorts/oVXGy0YJ0jg"
+   }
+  }
  }
 ]
