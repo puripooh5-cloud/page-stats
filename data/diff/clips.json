@@ -1057,5 +1057,28 @@
     "url": "https://www.youtube.com/shorts/oVXGy0YJ0jg"
    }
   }
+ },
+ {
+  "slug": "0048-มด-vs-ปลวก",
+  "vid": 107,
+  "a": "มด",
+  "b": "ปลวก",
+  "theme": null,
+  "dur": null,
+  "plan": "2026-10-28",
+  "ids": {
+   "facebook": {
+    "id": "1017447691368815",
+    "url": "https://www.facebook.com/reel/1017447691368815"
+   },
+   "instagram": {
+    "id": "18094643627676028",
+    "url": "https://www.instagram.com/reel/DfCRnQdDmDU/"
+   },
+   "youtube": {
+    "id": "Z_zQ_kTcdF0",
+    "url": "https://www.youtube.com/shorts/Z_zQ_kTcdF0"
+   }
+  }
  }
 ]
