@@ -1126,5 +1126,28 @@
     "url": "https://www.youtube.com/shorts/m06Jtl7afpg"
    }
   }
+ },
+ {
+  "slug": "0052-วาฬ-vs-โลมา",
+  "vid": 110,
+  "a": "วาฬ",
+  "b": "โลมา",
+  "theme": null,
+  "dur": null,
+  "plan": "2026-10-31",
+  "ids": {
+   "facebook": {
+    "id": "4473628566224334",
+    "url": "https://www.facebook.com/reel/4473628566224334"
+   },
+   "instagram": {
+    "id": "18105170309285484",
+    "url": "https://www.instagram.com/reel/DfKAAAliYvs/"
+   },
+   "youtube": {
+    "id": "soIuHpW3U2Q",
+    "url": "https://www.youtube.com/shorts/soIuHpW3U2Q"
+   }
+  }
  }
 ]
