@@ -1,14 +1,14 @@
 {
  "date": "2026-11-02",
- "updatedAt": "2026-11-02T01:10+07:00",
+ "updatedAt": "2026-11-02T01:21+07:00",
  "channel": {
   "yt_subs": 6,
-  "yt_views": 1694,
+  "yt_views": 1195,
   "ig_followers": 3,
   "fb_followers": 3
  },
  "totals": {
-  "yt_views": 1985,
+  "yt_views": 2008,
   "ig_views": 259,
   "fb_plays": 18,
   "tt_views": 965
@@ -132,7 +132,7 @@
    "cat": "ซักผ้า-ทำความสะอาด",
    "dur": 25.1,
    "yt_url": "https://www.youtube.com/shorts/5ynnTiX-oPE",
-   "yt_views": 4,
+   "yt_views": 5,
    "yt_likes": 0,
    "yt_comments": 0,
    "yt_eng_pct": null,
@@ -168,7 +168,7 @@
    "cat": "ห้องครัว",
    "dur": 25.0,
    "yt_url": "https://www.youtube.com/shorts/ScfSy810c5w",
-   "yt_views": 537,
+   "yt_views": 535,
    "yt_likes": 2,
    "yt_comments": 0,
    "yt_eng_pct": null,
@@ -204,7 +204,7 @@
    "cat": "จัดเก็บ",
    "dur": 24.8,
    "yt_url": "https://www.youtube.com/shorts/ETTVMxERPks",
-   "yt_views": 239,
+   "yt_views": 263,
    "yt_likes": 2,
    "yt_comments": 0,
    "yt_eng_pct": null,
