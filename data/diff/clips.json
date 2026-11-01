@@ -1149,5 +1149,28 @@
     "url": "https://www.youtube.com/shorts/soIuHpW3U2Q"
    }
   }
+ },
+ {
+  "slug": "0051-วุ้นเส้น-vs-เส้นหมี่",
+  "vid": 99,
+  "a": "วุ้นเส้น",
+  "b": "เส้นหมี่",
+  "theme": null,
+  "dur": null,
+  "plan": "2026-11-01",
+  "ids": {
+   "facebook": {
+    "id": "1618987170249770",
+    "url": "https://www.facebook.com/reel/1618987170249770"
+   },
+   "instagram": {
+    "id": "18034410824907037",
+    "url": "https://www.instagram.com/reel/DfMkykODtJP/"
+   },
+   "youtube": {
+    "id": "eprpJGDmbtY",
+    "url": "https://www.youtube.com/shorts/eprpJGDmbtY"
+   }
+  }
  }
 ]
