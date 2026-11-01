@@ -1,11 +1,12 @@
 # Page Stats
 
-หน้ารายงานสถิติคลิปสั้นรายวันของสองช่อง เปิดดูได้ที่ GitHub Pages ของ repo นี้
+หน้ารายงานสถิติคลิปสั้นรายวันของทุกช่อง เปิดดูได้ที่ GitHub Pages ของ repo นี้
 
 | ช่อง | โฟลเดอร์ข้อมูล | repo ที่เก็บสถิติ |
 |---|---|---|
 | ต่างกันยังไง | `data/diff/` | `whats-difference-poster` |
 | The Muscle Manual | `data/mm/` | `muscle-poster` |
+| ห้องนี้ต้องมี | `data/shop/` | `hongneetongmee/hongnee-poster` |
 
 ## ข้อมูลมาจากไหน
 
