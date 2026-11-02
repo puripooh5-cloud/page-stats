@@ -1172,5 +1172,28 @@
     "url": "https://www.youtube.com/shorts/eprpJGDmbtY"
    }
   }
+ },
+ {
+  "slug": "0050-กบ-vs-คางคก",
+  "vid": 114,
+  "a": "กบ",
+  "b": "คางคก",
+  "theme": null,
+  "dur": null,
+  "plan": "2026-11-02",
+  "ids": {
+   "facebook": {
+    "id": "3299556870433432",
+    "url": "https://www.facebook.com/reel/3299556870433432"
+   },
+   "instagram": {
+    "id": "18135751832494434",
+    "url": "https://www.instagram.com/reel/DfPJlXXE_5o/"
+   },
+   "youtube": {
+    "id": "uNzl8AThnsI",
+    "url": "https://www.youtube.com/shorts/uNzl8AThnsI"
+   }
+  }
  }
 ]
