@@ -1195,5 +1195,28 @@
     "url": "https://www.youtube.com/shorts/uNzl8AThnsI"
    }
   }
+ },
+ {
+  "slug": "0053-หอมแดง-vs-หอมใหญ่",
+  "vid": 101,
+  "a": "หอมแดง",
+  "b": "หอมใหญ่",
+  "theme": null,
+  "dur": null,
+  "plan": "2026-11-03",
+  "ids": {
+   "facebook": {
+    "id": "1109356918732817",
+    "url": "https://www.facebook.com/reel/1109356918732817"
+   },
+   "instagram": {
+    "id": "18021638486736215",
+    "url": "https://www.instagram.com/reel/DfRuYIijUiQ/"
+   },
+   "youtube": {
+    "id": "MzVIaGpKw-w",
+    "url": "https://www.youtube.com/shorts/MzVIaGpKw-w"
+   }
+  }
  }
 ]
