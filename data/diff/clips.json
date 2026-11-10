@@ -1356,5 +1356,28 @@
     "url": "https://www.youtube.com/shorts/LqI6MTaqM5w"
    }
   }
+ },
+ {
+  "slug": "0062-กระรอก-vs-กระแต",
+  "vid": 120,
+  "a": "กระรอก",
+  "b": "กระแต",
+  "theme": null,
+  "dur": null,
+  "plan": "2026-11-10",
+  "ids": {
+   "facebook": {
+    "id": "1130709479868458",
+    "url": "https://www.facebook.com/reel/1130709479868458"
+   },
+   "instagram": {
+    "id": "18122548198965145",
+    "url": "https://www.instagram.com/reel/Dfjv87QEXZ6/"
+   },
+   "youtube": {
+    "id": "RjKFrWYfca4",
+    "url": "https://www.youtube.com/shorts/RjKFrWYfca4"
+   }
+  }
  }
 ]
