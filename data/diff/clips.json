@@ -1494,5 +1494,28 @@
     "url": "https://www.youtube.com/shorts/M3ubmc1Q_bA"
    }
   }
+ },
+ {
+  "slug": "0081-ช็อกโกแลต-vs-โกโก้",
+  "vid": 141,
+  "a": "ช็อกโกแลต",
+  "b": "โกโก้",
+  "theme": null,
+  "dur": null,
+  "plan": "2026-11-16",
+  "ids": {
+   "facebook": {
+    "id": "28607747198904428",
+    "url": "https://www.facebook.com/reel/28607747198904428"
+   },
+   "instagram": {
+    "id": "18055342055815719",
+    "url": "https://www.instagram.com/reel/DfzMu6BCTrF/"
+   },
+   "youtube": {
+    "id": "kxg4FDFuPRA",
+    "url": "https://www.youtube.com/shorts/kxg4FDFuPRA"
+   }
+  }
  }
 ]
