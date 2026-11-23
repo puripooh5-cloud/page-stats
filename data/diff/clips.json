@@ -1655,5 +1655,28 @@
     "url": "https://www.youtube.com/shorts/M1xU_uC7gqA"
    }
   }
+ },
+ {
+  "slug": "0065-เป็ด-vs-ห่าน",
+  "vid": 123,
+  "a": "เป็ด",
+  "b": "ห่าน",
+  "theme": null,
+  "dur": null,
+  "plan": "2026-11-23",
+  "ids": {
+   "facebook": {
+    "id": "1002270195709560",
+    "url": "https://www.facebook.com/reel/1002270195709560"
+   },
+   "instagram": {
+    "id": "17974985499188375",
+    "url": "https://www.instagram.com/reel/DgFOS1Win_k/"
+   },
+   "youtube": {
+    "id": "Id7_Yv_EwoI",
+    "url": "https://www.youtube.com/shorts/Id7_Yv_EwoI"
+   }
+  }
  }
 ]
